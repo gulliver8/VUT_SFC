@@ -4,7 +4,7 @@ def get_user_input():
     start_x = input("Input starting place longitude (leave blank for first place from file to be start)")
     n_ants = int(input("Input number of ants"))
     start_feromone = 0.5
-    max_cycles = 5
+    max_cycles = 2
     return start_y, start_x, n_ants, start_feromone, max_cycles
 
 def process_file(start_y, start_x):

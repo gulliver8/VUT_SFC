@@ -66,7 +66,7 @@ while cycle < max_cycles:
     cycle += 1
 print("Final solution is: ", tabu_list["ant_best"])
 print("With the cost: ", best_cost)
-
+print(get_place_names(tabu_list["ant_best"], places_list))
 
 
 
