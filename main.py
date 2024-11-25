@@ -3,11 +3,11 @@ from distance_matrix import *
 from process_input import *
 from helping_functions import *
 
-start_y, start_x, n_ants, start_pheromone, max_cycles = get_user_input()
+file, start_y, start_x, n_ants, start_pheromone, max_cycles = get_user_input()
 
-places_list = process_file(start_y, start_x)
+places_list = process_file(start_y, start_x, file)
 if not places_list:
-    exit("There was a problem wit extracting data from the file.")
+    exit("There was a problem with extracting data from the file.")
 else:
     print("Places data successfully extracted!")
 
