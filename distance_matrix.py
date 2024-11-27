@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 def create_distance_matrix(places_list):
     num_places = len(places_list)

@@ -1,6 +1,7 @@
 import math
 import os
 import sys
+import numpy as np
 from distance_matrix import *
 from process_input import *
 from aco_functions import *
@@ -39,9 +40,11 @@ def main():
             list_name = f"ant_{ant}"
             tabu_list[list_name].clear()
             tabu_list[list_name].append(0)
-        #create matreix to store pheromone additions
-        pheromone_addition_matrix = create_pheromone_matrix(places_list, float(0))
 
+        #create matrix to store pheromone additions
+        pheromone_addition_matrix = create_pheromone_matrix(places_list, float(0))
+        #create pheromone matrix to store the elitist increase
+        elite_matrix = create_pheromone_matrix(places_list, 0)
 
         for i in range(len(places_list) - 1):
             for ant in range(args.ants):
@@ -51,18 +54,25 @@ def main():
 
         # for each ant count the total path cost (counting also end to start path)
         for ant in range(args.ants):
+
             # count cost of path the ant has chosen
-            cost = count_path_cost(tabu_list[f"ant_{ant}"], distance_matrix)
+            cost = count_path_cost(tabu_list[f"ant_{ant}"], distance_matrix, elite_matrix)
             print("Cost of ant %d in %d. cycle  is %.2f."% (ant+1, cycle+1, cost))
             print("Path of the ant:", tabu_list[f"ant_{ant}"])
+
             # update pheromone values
             calculate_pheromones(pheromone_addition_matrix, distance_matrix, cost, tabu_list[f"ant_{ant}"], args.total, args.mode)
-            # set new shortest path and length (compare with old one)
+
+            #set new shortest path and length (compare with old one)
             if cost < best_cost or best_cost == 0:
                 print("Solution improved: %.2f -> %.2f"% (best_cost, cost))
                 best_cost = cost
                 tabu_list["ant_best"] = tabu_list[f"ant_{ant}"].copy()
-        update_pheromone_matrix(pheromone_matrix,pheromone_addition_matrix,args.intensity,len(places_list))
+
+            #update the elitist matrix according to the best solution
+        elite_matrix = update_elite(elite_matrix, tabu_list["ant_best"])
+        elite_const = args.total/best_cost
+        update_pheromone_matrix(pheromone_matrix, pheromone_addition_matrix, elite_matrix, args.intensity, len(places_list), elite_const, args.mode)
         print_matrix(pheromone_matrix,"Pheromone matrix")
         cycle += 1
     input("\nOptimization done, press enter to show the results.\n")
