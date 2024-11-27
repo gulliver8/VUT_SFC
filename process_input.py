@@ -6,9 +6,8 @@ def get_user_input():
     start_y = input("Input starting place latitude (leave blank for first place from file to be start)")
     start_x = input("Input starting place longitude (leave blank for first place from file to be start)")
     n_ants = int(input("Input number of ants"))
-    print(type(file))
-    start_feromone = 0.5
-    max_cycles = 2
+    start_feromone = 0.1
+    max_cycles = 20
     return file, start_y, start_x, n_ants, start_feromone, max_cycles
 
 def process_file(start_y, start_x, file_path):
@@ -32,9 +31,10 @@ def process_file(start_y, start_x, file_path):
             lon = float(place.get('lon'))
             for place_name in place:
                 name = place_name.text
+
             places_list.append({
                 'place_num': place_num,
-                'place': name,
+                'place': name.strip()[:20] ,
                 'y': lat,
                 'x': lon
             })
@@ -50,7 +50,7 @@ def process_file(start_y, start_x, file_path):
                     # extract and parse the data
                     lat_coord = float(parts[0].strip())
                     long_coord = float(parts[1].strip())
-                    name = parts[2].strip()[:10]
+                    name = parts[2].strip()[:20]
 
                     # add the parsed data as a dictionary to the list
                     places_list.append({
