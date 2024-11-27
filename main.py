@@ -8,7 +8,6 @@ from interactive import *
 
 def main():
     args = parse()
-
     places_list = process_file(args.start_lat, args.start_lon, args.filename)
     if not places_list:
         exit("There was a problem with extracting data from the file, please check the file format.\n")
@@ -57,7 +56,7 @@ def main():
             print("Cost of ant %d in %d. cycle  is %.2f."% (ant+1, cycle+1, cost))
             print("Path of the ant:", tabu_list[f"ant_{ant}"])
             # update pheromone values
-            calculate_pheromones(pheromone_addition_matrix, cost, tabu_list[f"ant_{ant}"], args.total)
+            calculate_pheromones(pheromone_addition_matrix, distance_matrix, cost, tabu_list[f"ant_{ant}"], args.total, args.mode)
             # set new shortest path and length (compare with old one)
             if cost < best_cost or best_cost == 0:
                 print("Solution improved: %.2f -> %.2f"% (best_cost, cost))

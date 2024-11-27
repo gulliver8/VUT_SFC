@@ -7,10 +7,15 @@ def create_pheromone_matrix(place_nums, start_pheromones):
     return pheromone_matrix
 
 
-def calculate_pheromones(pheromone_addition_matrix, cost, tabu_list, total_pheromones):
+def calculate_pheromones(pheromone_addition_matrix, distance_matrix, cost, tabu_list, total_pheromones, mode):
     #add to each path which the ant pased based on tabu
     for a, b in zip(tabu_list, tabu_list[1:] + tabu_list[:1]):
-        pheromone_addition_matrix[a][b] += (total_pheromones/cost)
+        if(mode == "density"):
+            pheromone_addition_matrix[a][b] += total_pheromones
+        elif(mode == "quantity"):
+            pheromone_addition_matrix[a][b] += total_pheromones/distance_matrix[a][b]
+        else:
+            pheromone_addition_matrix[a][b] += (total_pheromones / cost)
     return 0
 
 def update_pheromone_matrix(pheromone_matrix, pheromone_addition_matrix, pher_evap_intensity, num_places):
