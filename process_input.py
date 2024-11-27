@@ -2,13 +2,15 @@ import xml.etree.ElementTree as ET
 ##TODO check input
 
 def get_user_input():
-    file = input("Enter input file name. It can be gpx or txt file.")
-    start_y = input("Input starting place latitude (leave blank for first place from file to be start)")
-    start_x = input("Input starting place longitude (leave blank for first place from file to be start)")
-    n_ants = int(input("Input number of ants"))
+    file = input("Enter file name (It can be gpx or txt file):\t")
+    start_y = input("Starting point latitude (leave blank if the starting point is defined at the beggining of the file):\t")
+    start_x = input("Starting point longitude (leave blank if the starting point is defined at the beggining of the file):\t")
+    n_ants = int(input("Number of ants:\t"))
+    total_pheromones = int(input("Total pheromone amount for each ant:\t"))
     start_feromone = 0.1
     max_cycles = 20
-    return file, start_y, start_x, n_ants, start_feromone, max_cycles
+    evap_intensity =0.1 #<0,1>
+    return file, start_y, start_x, n_ants, start_feromone, max_cycles, evap_intensity, total_pheromones
 
 def process_file(start_y, start_x, file_path):
     # initialize an empty list to store the data and add start

@@ -6,7 +6,7 @@ from aco_functions import *
 from interactive import *
 
 def main():
-    file, start_y, start_x, n_ants, start_pheromone, max_cycles = get_user_input()
+    file, start_y, start_x, n_ants, start_pheromone, max_cycles, evap_intensity, total_pheromones = get_user_input()
 
     places_list = process_file(start_y, start_x, file)
     if not places_list:
@@ -39,7 +39,8 @@ def main():
             list_name = f"ant_{ant}"
             tabu_list[list_name].clear()
             tabu_list[list_name].append(0)
-
+        #create matreix to store pheromone additions
+        pheromone_addition_matrix = create_pheromone_matrix(places_list, float(0))
 
 
         for i in range(len(places_list) - 1):
@@ -55,13 +56,14 @@ def main():
             print("Cost of ant %d in %d. cycle  is %.2f."% (ant+1, cycle+1, cost))
             print("Path of the ant:", tabu_list[f"ant_{ant}"])
             # update pheromone values
-            update_pheromones(pheromone_matrix, cost, tabu_list[f"ant_{ant}"])
-            print_matrix(pheromone_matrix, "Pheroimone matrix cycle %d ant %d"%(cycle+1, ant+1))
+            calculate_pheromones(pheromone_addition_matrix, cost, tabu_list[f"ant_{ant}"], total_pheromones)
             # set new shortest path and length (compare with old one)
             if cost < best_cost or best_cost == 0:
                 print("Solution improved: %.2f -> %.2f"% (best_cost, cost))
                 best_cost = cost
                 tabu_list["ant_best"] = tabu_list[f"ant_{ant}"].copy()
+        update_pheromone_matrix(pheromone_matrix,pheromone_addition_matrix,evap_intensity,len(places_list))
+        print_matrix(pheromone_matrix,"Pheromone matrix")
         cycle += 1
     input("\nOptimization done, press enter to show the results.\n")
     print("Final solution is: ", tabu_list["ant_best"])

@@ -6,12 +6,17 @@ def create_pheromone_matrix(place_nums, start_pheromones):
     pheromone_matrix = [[start_pheromones] * num_places for _ in range(num_places)]
     return pheromone_matrix
 
-def update_pheromones(pheromone_matrix, cost, tabu_list):
-    #count the quality of solution
-    cost_per_move = cost/len(tabu_list)
+
+def calculate_pheromones(pheromone_addition_matrix, cost, tabu_list, total_pheromones):
     #add to each path which the ant pased based on tabu
     for a, b in zip(tabu_list, tabu_list[1:] + tabu_list[:1]):
-        pheromone_matrix[a][b] += (1/cost_per_move)
+        pheromone_addition_matrix[a][b] += (total_pheromones/cost)
+    return 0
+
+def update_pheromone_matrix(pheromone_matrix, pheromone_addition_matrix, pher_evap_intensity, num_places):
+    for a in range(num_places):
+        for b in range(num_places):
+            pheromone_matrix[a][b] = (1-pher_evap_intensity)*pheromone_matrix[a][b] + pheromone_addition_matrix[a][b]
     return 0
 
 def count_path_cost(tabu_list, distance_matrix):
@@ -49,12 +54,3 @@ def pick_next_place(tabu_list, pheromone_matrix, place_nums):
 
     return next_place
 
-def get_place_names(tabu_list, place_list):
-    place_name_list = []
-    #lookup dictionary of place names
-    place_lookup = {item['place_num']: item['place'] for item in place_list}
-
-    # Extract names of places in the order of place_nums_to_find
-    place_name_list = [place_lookup[num] for num in tabu_list if num in place_lookup]
-
-    return place_name_list
