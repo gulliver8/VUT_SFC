@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="https://mapy.cz/">
+	<wpt lat="49.226655" lon="17.666337">
+		<name>Zlín</name>
+	</wpt>
+	<wpt lat="49.471141" lon="17.111480">
+		<name>Prostějov</name>
+	</wpt>
+	<wpt lat="49.428847" lon="16.799584">
+		<name>Vysočany</name>
+	</wpt>
+	<wpt lat="49.247077" lon="16.672472">
+		<name>Bílovice nad Svitavou</name>
+	</wpt>
+	<wpt lat="49.298517" lon="16.531442">
+		<name>Kuřim</name>
+	</wpt>
+	<wpt lat="49.090211" lon="16.603879">
+		<name>Rajhrad</name>
+	</wpt>
+	<wpt lat="49.039524" lon="16.618808">
+		<name>Židlochovice</name>
+	</wpt>
+	<wpt lat="48.740692" lon="16.754994">
+		<name>Valtice</name>
+	</wpt>
+	<wpt lat="48.902959" lon="16.543645">
+		<name>Pasohlávky</name>
+	</wpt>
+	<wpt lat="49.309257" lon="16.613774">
+		<name>Vranov</name>
+	</wpt>
+	<wpt lat="49.344532" lon="16.755951">
+		<name>Jedovnice</name>
+	</wpt>
+	<wpt lat="49.297853" lon="17.393119">
+		<name>Kroměříž</name>
+	</wpt>
+	<wpt lat="49.277470" lon="16.998977">
+		<name>Vyškov</name>
+	</wpt>
+	<wpt lat="49.153255" lon="16.876494">
+		<name>Slavkov u Brna</name>
+	</wpt>
+	<wpt lat="48.805238" lon="16.637620">
+		<name>Mikulov</name>
+	</wpt>
+	<wpt lat="49.275913" lon="16.436865">
+		<name>Veverská Bítýška</name>
+	</wpt>
+	<wpt lat="49.298517" lon="16.531442">
+		<name>Kuřim</name>
+	</wpt>
+	<wpt lat="49.300500" lon="16.658551">
+		<name>Adamov</name>
+	</wpt>
+	<wpt lat="49.181542" lon="16.389193">
+		<name>Rosice</name>
+	</wpt>
+	<wpt lat="49.127890" lon="16.614414">
+		<name>Brno</name>
+	</wpt>
+</gpx>
+
