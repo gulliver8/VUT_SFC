@@ -1,22 +1,26 @@
 import xml.etree.ElementTree as ET
-##TODO check input
+import argparse
 
-def get_user_input():
-    file = input("Enter file name (It can be gpx or txt file):\t")
-    start_y = input("Starting point latitude (leave blank if the starting point is defined at the beggining of the file):\t")
-    start_x = input("Starting point longitude (leave blank if the starting point is defined at the beggining of the file):\t")
-    n_ants = int(input("Number of ants:\t"))
-    total_pheromones = int(input("Total pheromone amount for each ant:\t"))
-    start_feromone = 0.1
-    max_cycles = 20
-    evap_intensity =0.1 #<0,1>
-    return file, start_y, start_x, n_ants, start_feromone, max_cycles, evap_intensity, total_pheromones
+def parse():
+    parser = argparse.ArgumentParser(description="Parse arguments for ACO")
+
+    #add arguments
+    parser.add_argument("filename", help="Txt or gpx file to process.")
+    parser.add_argument("--ants", type=int, default=10, help="Number of ants.")
+    parser.add_argument("--start_lat", type=float, default=None,help="Number of ants.")
+    parser.add_argument("--start_lon", type=float, default=None, help="Number of ants.")
+    parser.add_argument("--cycles", type=int, default=10, help="Number of ants.")
+    parser.add_argument("--intensity", type=float, default=0.1, help="Intensity of evaporation of the pheromones.")
+    parser.add_argument("--total", type=int, default=100, help="Total amount of pheromones for an ant.")
+    parser.add_argument("--start", type=float, default=1, help="Starting value for pheromone matrix.")
+
+    return parser.parse_args()
 
 def process_file(start_y, start_x, file_path):
     # initialize an empty list to store the data and add start
     place_num = 0
     places_list = []
-    if start_y != "":
+    if start_y is not None:
         places_list.append({
             'place_num': 0,
             'place': 'start',
