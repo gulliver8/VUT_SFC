@@ -1,6 +1,7 @@
 import math
 import os
 import sys
+import numpy as np
 from distance_matrix import *
 from process_input import *
 from aco_functions import *
@@ -15,7 +16,8 @@ def main():
         exit("There was a problem with extracting data from the file, please check the file format.\n")
     else:
         print("Places data successfully extracted! List contains %d places\n" % len(places_list))
-    place_nums = range(len(places_list))
+    num_places = len(places_list)
+    place_nums = range(num_places)
 
     # create the distance matrix
     distance_matrix = create_distance_matrix(places_list)
@@ -30,23 +32,24 @@ def main():
     # cycle counter
     cycle = 0
     # create pheromone matrix with constant pheromone intensity between places
-    pheromone_matrix = create_pheromone_matrix(places_list, args.start)
+    pheromone_matrix = np.full((num_places,num_places),args.start)
     # create value and list of best path
     tabu_list["ant_best"] = list()
     best_cost = 0
-
+    # create matrix for pheromone additions
+    pheromone_addition_matrix = np.zeros((num_places, num_places), dtype='f')
+    # create matrix for elitist aditions
+    elite_matrix = np.zeros((num_places, num_places), dtype='f')
     while cycle < args.cycles:
         input("\nPress enter to start the next cycle\n")
-        # reset list of each ant (add starting position)
+        # reset list of each ant (add starting position) and matrices
         for ant in range(args.ants):
             list_name = f"ant_{ant}"
             tabu_list[list_name].clear()
             tabu_list[list_name].append(0)
-
-        #create matrix for pheromone additions
-        pheromone_addition_matrix = create_pheromone_matrix(places_list, float(0))
-        #create matrix for elitist aditions
-        elite_matrix = create_pheromone_matrix(places_list, 0)
+        pheromone_addition_matrix.fill(0)
+        if(args.mode == 'elite'):
+            elite_matrix.fill(0)
 
         # construct the path for each ant
         for i in range(len(places_list) - 1):
@@ -73,9 +76,8 @@ def main():
         # calculate the elitist matrix according to the best solution
         if(args.mode == "elite"):
             elite_matrix = update_elite(elite_matrix, tabu_list["ant_best"])
-            elite_const = args.total/best_cost
         # update pheromone matrix
-        update_pheromone_matrix(pheromone_matrix, pheromone_addition_matrix, elite_matrix, args.intensity, len(places_list), elite_const, args.mode)
+        pheromone_matrix = update_pheromone_matrix(pheromone_matrix, pheromone_addition_matrix, elite_matrix, len(places_list), best_cost, args)
         print_matrix(pheromone_matrix,"Pheromone matrix")
         cycle += 1
     # show the final solution
