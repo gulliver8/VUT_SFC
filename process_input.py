@@ -6,14 +6,14 @@ def parse():
 
     #add arguments
     parser.add_argument("filename", help="Txt or gpx file to process.")
-    parser.add_argument("--ants", type=int, default=5, help="Number of ants.")
-    parser.add_argument("--mode", choices=['classic', 'elite', 'quantity', 'density'], default='classic', help="Choose optional algorithm modification: ant-density, ant-quantity or elitist.")
+    parser.add_argument("-a", "--ants", type=int, default=5, help="Number of ants.")
+    parser.add_argument("-m", "--mode", choices=['elite', 'quantity', 'density'], default=None, help="Choose optional algorithm modification: ant-density, ant-quantity or elitist.")
     parser.add_argument("--start_lat", type=float, default=None, help="Starting point longitude -if not taking the first item from file.")
     parser.add_argument("--start_lon", type=float, default=None, help="Starting point longitude -if not taking the first item from file.")
-    parser.add_argument("--cycles", type=int, default=10, help="Number of cycles to perform.")
-    parser.add_argument("--intensity", type=float, default=0.1, help="Intensity of evaporation of the pheromones.")
-    parser.add_argument("--total", type=int, default=100, help="Total amount of pheromones for an ant.")
-    parser.add_argument("--start", type=float, default=1, help="Starting value for pheromone matrix.")
+    parser.add_argument("-c", "--cycles", type=int, default=10, help="Number of cycles to perform.")
+    parser.add_argument("-i", "--intensity", type=float, default=0.1, help="Intensity of evaporation of the pheromones.")
+    parser.add_argument("-t", "--total", type=int, default=100, help="Total amount of pheromones for an ant.")
+    parser.add_argument("-s", "--start", type=float, default=1, help="Starting value for pheromone matrix.")
 
     return parser.parse_args()
 
