@@ -26,7 +26,7 @@ def euclid_distance(place1,place2):
     total_dist =  math.sqrt((lat_diff**2)+(long_diff**2)) #sqrt((x1-x2)^2+(y1-y2)^2)
     return round(total_dist,2)
 
-#calculate Haversine distance between two pplaces
+
 def haversine_distance(place1, place2):
     lat1, lon1 = place1['y'], place1['x']
     lat2, lon2 = place2['y'], place2['x']

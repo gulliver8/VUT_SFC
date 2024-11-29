@@ -2,9 +2,10 @@ import xml.etree.ElementTree as ET
 import argparse
 
 def parse():
+    # define parser
     parser = argparse.ArgumentParser(description="Parse arguments for ACO")
 
-    #add arguments
+    # add arguments
     parser.add_argument("filename", help="Txt or gpx file to process.")
     parser.add_argument("-a", "--ants", type=int, default=5, help="Number of ants.")
     parser.add_argument("-m", "--mode", choices=['elite', 'quantity', 'density'], default=None, help="Choose optional algorithm modification: ant-density, ant-quantity or elitist.")
@@ -18,9 +19,10 @@ def parse():
     return parser.parse_args()
 
 def process_file(start_y, start_x, file_path):
-    # initialize an empty list to store the data and add start
+    # initialize an empty list to store the data
     place_num = 0
     places_list = []
+    # add starting point to the list, if it was specified in program arguments
     if start_y is not None:
         places_list.append({
             'place_num': 0,
@@ -29,16 +31,18 @@ def process_file(start_y, start_x, file_path):
             'x': float(start_x.strip())
         })
         place_num += 0;
-    #check if the file is gpx or txt
+    # check if the file is gpx or txt
     if file_path.endswith(".gpx"):
+        #parse the gpx file
         tree = ET.parse(file_path)
         root = tree.getroot()
         for place in root:
+            # find the attributes od the waypoint
             lat = float(place.get('lat'))
             lon = float(place.get('lon'))
             for place_name in place:
                 name = place_name.text
-
+            # add waypoint to list
             places_list.append({
                 'place_num': place_num,
                 'place': name.strip()[:20] ,
@@ -47,6 +51,7 @@ def process_file(start_y, start_x, file_path):
             })
             place_num += 1
         return places_list
+
     elif file_path.endswith(".txt"):
         with open(file_path, 'r') as file:
             for line in file:
@@ -69,5 +74,6 @@ def process_file(start_y, start_x, file_path):
                 place_num += 1
         return places_list
     else:
+        #if the file is neither gpx nor txt, return blank list
         return []
 
